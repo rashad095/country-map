@@ -8,6 +8,8 @@ const Countries = () => {
 
     const [visitedCountries, setVisitedCountries] = useState([]);
 
+    const [visitedFlags, setVisitedFlags] = useState([]);
+
 
 
     useEffect(() => {
@@ -16,28 +18,45 @@ const Countries = () => {
             .then(data => setCountries(data));
     }, [])
 
-    const handleVisitedCountry = country =>{
+    const handleVisitedCountry = country => {
         console.log('add this to your visited');
         const newVisitedCountries = [...visitedCountries, country];
         setVisitedCountries(newVisitedCountries);
     }
 
+    const handleVisitedFlags = flag => {
+        const newVisitedFlags = [...visitedFlags, flag];
+        setVisitedFlags(newVisitedFlags);
+    }
+
+    // remove
+
+    
+
     return (
         <div>
             <h3>Countries: {countries.length}</h3>
+            {/* visited country */}
             <div>
                 <h5>VIsited Countries: {visitedCountries.length}</h5>
+                <ul>
+                    {
+                        visitedCountries.map(country => <li key={country.cca3}>{country.name.common}</li>)
+                    }
+                </ul>
             </div>
-            <ul>
+            <div className="flag-container">
                 {
-                    visitedCountries.map(country => <li key={country.cca3}>{country.name.common}</li>)
+                    visitedFlags.map((flag, idx) => <img key={idx} src={flag}></img>)
                 }
-            </ul>
+            </div>
+            {/* display country */}
             <div className="country-container">
                 {
                     countries.map(country => <Country
-                         key={country.cca3}
-                         handleVisitedCountry={handleVisitedCountry}
+                        key={country.cca3}
+                        handleVisitedCountry={handleVisitedCountry}
+                        handleVisitedFlags={handleVisitedFlags}
                         country={country}></Country>)
                 }
             </div>
